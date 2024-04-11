@@ -37,6 +37,10 @@ One of the most helpful tools to an R programmer are R packages! In a nutshell, 
 library()
 ```
 
+```{r}
+library()
+```
+
 A new window should have opened up with a list of packages and a short description! 
 
 *Note*
@@ -280,6 +284,11 @@ Awesome! Let's try to input two columns to explore further:
 ```{r}
 table(sdr_data$goal_7_dash, sdr_data$regions_used_for_the_sdr) # looking at 2 columns, separated by a ,
 ```
+```{r}
+table(sdr_data$goal_5_dash, sdr_data$regions_used_for_the_sdr)
+```
+
+
 Now you can see how many countries in each region got green, orange, red, and yellow scores for SDG Goal 7. We've also used 8 new functions (View, read_csv, head, dim, etc.). Great job!
 
 #### Cleaning and Manipulating Data 
@@ -291,17 +300,29 @@ The next step is cleaning and manipulating data. There are different ways to do 
 
 Select is a function used to subset or select columns in your R data frame. Let's try this out by selecting the SDG 3 and SDG 4 scores.
 
-```{r}
-sdr_data %>% 
-  select(goal_3_score, goal_4_score)
+```{r
+SDG_score == sdr_data %>% 
+select(goal_3_score, goal_4_score)
 ```
 
 You'll notice we used the pipe operator ` %>% ` after the name of the dataframe, and then listed the columns we were interested in the select() function
 
 What if we want to subset specific rows? We can do this by using the filter function. 
 
+```{r}
+sdr_data %>% 
+  filter(regions_used_for_the_sdr == "Oceania")
+```
+
+
 #### <span style="color: red;">Challenge 2</span>
 Using the `select()` function, select two new SDG goal scores. Assign it to a variable named `SDG_scores`. 
+
+```{r}
+SDG_scores <- sdr_data %>% 
+  select(goal_5_score, goal_3_score)
+```
+
 
 *2. filter()*
 
@@ -348,6 +369,12 @@ Now, you will have a dataframe called *oceania_data* in your environment pane (t
 sdr_data %>% 
   group_by(regions_used_for_the_sdr) %>% 
   summarise(mean_goal_7_score_by_region = mean(population_using_at_least_basic_drinking_water_services_percent))
+```
+
+```{r}
+sdr_data %>% 
+  group_by(regions_used_for_the_sdr) %>% 
+  summarise(mean_goal_8_score_by_region = mean(population_using_at_least_basic_drinking_water_services_percent))
 ```
 
 
