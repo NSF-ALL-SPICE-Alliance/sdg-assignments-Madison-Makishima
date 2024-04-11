@@ -12,7 +12,7 @@ output:
 
 ### Today's Topics
 
-Welcome to Basic Visualizations! We're going to go over some code on how to create our first visualizations using our SDR 2023 Data.
+Welcome to Basic Visualizations! We're going to go over some code on how to create our first visualizations using our SDR 2023 Data.an
 
 1. Scatter plot
 2. Bar chart

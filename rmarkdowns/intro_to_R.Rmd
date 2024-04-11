@@ -115,6 +115,8 @@ Create a my_name variable with your name assigned to the variable instead of "Vi
 ```{r}
 my_name <-"Madison"
 
+my_buddys_name <- "Charles"
+
 my_age = 20
 
 my_age + 5
