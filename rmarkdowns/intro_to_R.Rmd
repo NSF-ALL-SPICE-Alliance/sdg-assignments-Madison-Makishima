@@ -71,6 +71,9 @@ Let's double check to see if it installed correctly using the following code:
 ```{r}
 system.file(package = "tidyverse") # input the name of the package in quotes
 ```
+```{r}
+system.file(package = "tidyverse")
+```
 
 If you got a response giving you a file path - you're all set! You successfully installed your first package! 
 
@@ -213,11 +216,16 @@ Example of this kind of error pictured here:
 
 In the code chunk below, we use the `read_csv()` function to read in the csv file called *SDR-2023-Data.csv* in our data folder. 
 
+```{r}
+read.csv(SDR-2023-Data.csv)
+```
+
+
   - We use the `here()` function to cut out long file paths. Instead of starting at the home directory on our computer and having to point R towards the csv file we want to read in with *"Users/Victoria/data_science/SDR-2023-Landscape/SDR-2023-Data.csv"*, we can simply tell R to start within the directory of our current R project and find the SDR-2023-Data.csv in our data folder. 
   
     - This also **ensures reproducibility** because as long as we share R projects on github, our project directories will always be the same
 ```{r, message=FALSE}
-sdr_data <- read_csv(here("data/SDR-2023-Data.csv")) # assigning the dataset to a variable so that we can look at/reference it
+sdr_data <- read.csv(here("data/SDR-2023-Data.csv")) # assigning the dataset to a variable so that we can look at/reference it
 # to view the whole dataset you can click on sdr_data in your environment pane at the top right of your screen)
 ```
 Cleaning names
@@ -234,6 +242,11 @@ Understanding what your data looks like is crucial to the data analysis process.
 ```{r}
 head(sdr_data) # view the first couple of rows and columns of your dataset
 ```
+
+```{r}
+head(sdr_data)
+```
+
 
 As we talked about earlier, it's always helpful to know what types of data you're handling. The code below shows us what type of data type each column holds (for ex., chr = character, num = numeric), the number of rows (you'll see that it's 206:666, meaning 206 rows and 666 columns), and some of the first few values for each column. 
 
@@ -307,6 +320,11 @@ SDG_score == sdr_data %>%
 select(goal_3_score, goal_4_score)
 ```
 
+```{r}
+SDG_Score == sdr_data %>%
+select(goal_14_score, goal_17_score)
+```
+
 You'll notice we used the pipe operator ` %>% ` after the name of the dataframe, and then listed the columns we were interested in the select() function
 
 What if we want to subset specific rows? We can do this by using the filter function. 
@@ -346,6 +364,8 @@ Notes:
 #### <span style="color: red;">Challenge 3</span>
 Using the `filter()` function, filter for another region other than Oceania. Assign it to a variable named `new_region`. 
 
+
+
 **Important**
 
 When executing the last 2 code chunks, notice that we did not use the assign arrow `<-`, therefore, we did not create any new dataframes
@@ -376,7 +396,7 @@ sdr_data %>%
 ```{r}
 sdr_data %>% 
   group_by(regions_used_for_the_sdr) %>% 
-  summarise(mean_goal_8_score_by_region = mean(population_using_at_least_basic_drinking_water_services_percent))
+  summarise(mean_goal_14_score_by_region = mean(population_using_at_least_basic_drinking_water_services_percent))
 ```
 
 
