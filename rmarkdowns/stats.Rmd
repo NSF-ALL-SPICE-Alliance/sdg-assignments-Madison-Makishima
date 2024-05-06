@@ -215,8 +215,23 @@ ggplot(sdr_data, aes(x = goal_12_score,
     - **Hint** to be able to tell which point is which country, you will have to add `label = country` in the aes function after you tell ggplot what you which scores you want on the x and y axis
      - **Hint** to use the ggplotly() function, you will need to use `library()` to load in the plotly package in the first code chunk in this R Markdown
 
+```{r}
+library(ggplot2)
+library(ggpubr)
+
+ggplot(sdr_data, aes(x = goal_9_score, y = goal_17_score, label = country)) +
+  geom_point() +
+  geom_smooth() +
+  stat_cor() +
+  theme_minimal()
+```
+
   - in 4-6 sentences, come up with a hypotheses for the positive or negative correlation between the 2 goals
+  
+##MADISON'S INTERPRETATION:
+# The countries above the line of best fit are are doing well in terms of high scores over 50 and 60. If countries are doing well in innovation, infrastructure, and technology, then there will be more countries who do well with SDG 9 and SDG 17. This going for a positive correlation. Countries who are outliers will do well in one SDG goal rather than 2 SDG goals. 
       
       - are there any points that don't follow the trend (outliers)
-        
+# Yes, there are points that don't follow the tred. Such as points that are doing extremely well in the scores of SDG 9 but are around the score of 20 for SDG 17. 
         - which country(s) are outliers?
+# The country that are outliers are the countries at the bottom.
