@@ -1,0 +1,105 @@
+---
+title: "Final Project"
+author: "Madison Makishima"
+date: "2024-05-07"
+output:
+  pdf_document: default
+  html_document: default
+---
+
+Load in Packages used in the analysis:
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+library(here)
+library(janitor)
+library(leaflet)
+library(plotly)
+```
+
+Read in Data
+
+```{r}
+sdr_data <- read_csv(here("data/SDR-2023-Data.csv"))
+```
+
+Read in SIDS Data
+
+```{r}
+sdr_data_sids <- read.csv(here("data/SDR-for-SIDS/SIDS-SDR-2023-Data.csv"))
+```
+
+Clean column names of the dataframe
+
+```{r}
+sdr_data <- sdr_data %>%
+  clean_names()
+```
+
+```{r}
+sdr_data_sids <- sdr_data_sids %>%
+  clean_names()
+```
+
+Filter data frame.
+
+```{r}
+sdr_data_east_south_asia <- sdr_data %>% 
+  filter(regions_used_for_the_sdr == "East & South Asia")
+```
+
+Make a scatterplot of East & South Asia in SDG 9
+
+```{r}
+ggplot(sdr_data_east_south_asia, aes(x = goal_9_score, 
+                     y = goal_17_score)) +
+  geom_point() +
+  theme_minimal() 
+```
+# This scatterplot shows the scores of SDGs 9 (Industry, Infrastructure, and Innovation) and 17 (Partnership For The Goals) in the East and South Asia region according to the SDR data. The regions are scattered throughout the graph. One notable country's SDG 9 score is below 40, meaning that the country is not yet there in sustainable industry and infrastrature but they do have a high score for SDG 17 above 70. This means that country has help by other countries to meet the indicators of SDG 9, trending upwards due to their partnerships. Another country is above the score of 90 in SDG 9, meaning their infrastructure is sustainable while they may not have enough partnerships as their score is below 50. 
+
+Make a leaflet map for Pakistan
+
+```{r}
+library(leaflet)
+
+leaflet() %>%
+  addTiles() %>%
+  setView(lng = 69.3451, lat = 30.3570, zoom = 5) %>%  
+  addMarkers(lng = 69.3451, lat = 30.3570, popup = "PAK") 
+  data = sdr_data
+  stroke = FALSE
+  fillOpacity = 0.7
+  smoothFactor = 0.8
+```
+
+# This leaflet map shows the location of Pakistan. According to the SDR data and report, Pakistan is still facing major obstacles for SDGs 9 and 17 when it comes to having sustainable infrastructure and engineering to build many sustainable communities. Pakistan shares their borders with China, India, Iran, Afghanistan, and Tajikistan. Pakistan's overall score is 58.97 out of 100 which means that they are just above halfway to achieving the sustainable development goals. Since 2020, Pakistan's SDG trend is likely to trend upwards and is still continuing to improve. They have already achieved an indicator in SDG 13 (Climate Action) which is lowering CO2 emissions in imports to the country. Another indicator, CO2 emissions from fossil fuel combustion and production of cement, is slowly increasing. They also are on track after achieving an indicator of SDG 10 (Reduced Inequalities).
+
+Make a histogram for Pakistan with SDG 9 
+
+```{r}
+library(ggplot2)
+
+sdr_data_normalized_scores <- subset(sdr_data_normalized_scores, country == "PAK")
+
+ggplot(sdr_data_imputed, aes(x = normalized_score_sdg9_uni)) +
+  geom_histogram(binwidth = 1, fill = "pink", color = "black") +
+  labs(x = "SDG 9 Score", y = "Frequency") +
+  ggtitle("Distribution of SDG 9 Scores for Pakistan")
+
+```
+#This histogram is created to showcase the score of SDG 9 in Pakistan. I chose the variable "normalized_score_sdg9_uni" because it shows that this variable has a lot of potential when it comes to both SDGs. However, both ends of the graph shows Pakistan's highest levels of achieving industry, innovation, and infrastructure. When the country has a score of 100 in building sustainable materials for their buildings, their score for SDG 9 is actually below the score of 30 which means they are not getting enough sustainable materials. In between 0 and 100 on the x-axis, the third highest score of SDG 9 is also below 30. There are bar clusters between the scores of 55 to 70. There is another cluster between the scores of 80 to 95 on the x-axis. SDG 9 shows that they still have significant improvements to make in the years to come. 
+
+Make another histogram for SDG 17 in Pakistan
+
+```{r}
+library(ggplot2)
+
+ggplot(sdr_data_imputed, aes(x = normalized_score_sdg17_cohaven)) +
+  geom_histogram(binwidth = 1, fill = "skyblue", color = "black") +
+  labs(x = "SDG 17 Score", y = "Frequency") +
+  ggtitle("Distribution of SDG 17 Scores for Pakistan")
+```
+
+# This second histogram is created to show the results of SDG 17 in Pakistan. The highest level of SDG 17 is the score of 100 on the x-axis with the frequency of above 150. This shows that Pakistan is prioritizing the importance of partnership for the goals. I chose the variable "normalized_score_sdg17_cohaven" because I wanted to know if Pakistan values having help or partnerships in order to meet the SDR indicators. This specific variable refers to Pakistan's joint collaboration between them and other countries in creating a place where they are able to achieve Pakistan's goals together. 
